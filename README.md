@@ -1,2 +1,3 @@
 # go-devops-project
-A devops project using golang
+A simple devops project using golang to test docker, kubernetes and load balancing
+
