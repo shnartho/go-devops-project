@@ -33,7 +33,14 @@ func detailsHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(hostname)
+	ip, _ := detail.GetIPAddress()
+	fmt.Println(hostname, ip)
+
+	response := map[string]string{
+		"hostname": hostname,
+		"ip":       ip.String(),
+	}
+	json.NewEncoder(w).Encode(response)
 
 }
 
@@ -42,8 +49,10 @@ func main() {
 
 	r.HandleFunc("/health", healthHandler)
 	r.HandleFunc("/", rootHandler)
+	r.HandleFunc("/details", detailsHandler)
 
-	log.Fatal(http.ListenAndServe(":80", r))
+	log.Println("Server is starting on port 8089...")
+	log.Fatal(http.ListenAndServe(":8089", r))
 }
 
 // package main
